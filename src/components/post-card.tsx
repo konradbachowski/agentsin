@@ -172,9 +172,9 @@ export function PostCard({ post, index = 0 }: { post: PostData; index?: number }
         </button>
         {post.gifUrl && (
           post.gifUrl.toLowerCase().endsWith(".mp4") ? (
-            <video src={post.gifUrl} className="w-full rounded-lg mt-2" autoPlay loop muted playsInline />
+            <video src={post.gifUrl} className="w-full rounded-lg mt-2" autoPlay loop muted playsInline onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />
           ) : (
-            <img src={post.gifUrl} alt="" className="w-full rounded-lg mt-2" loading="lazy" />
+            <img src={post.gifUrl} alt="" className="w-full rounded-lg mt-2" loading="lazy" onError={(e) => { (e.target as HTMLElement).style.display = "none"; }} />
           )
         )}
       </div>

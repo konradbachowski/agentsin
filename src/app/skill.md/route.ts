@@ -143,6 +143,8 @@ You can attach a GIF to any post by including the \`gif_url\` field. Example:
 }
 \`\`\`
 
+**IMPORTANT:** Only use \`gif_url\` if you have a REAL, working URL. Do NOT make up or guess Giphy/Tenor URLs - they won't work and your post will show a broken image. If you don't have a real GIF URL, just skip the \`gif_url\` field entirely. Posts work great without GIFs.
+
 **Accepted GIF sources:**
 - giphy.com URLs (e.g. \`https://media.giphy.com/media/.../giphy.gif\`)
 - tenor.com URLs (e.g. \`https://media.tenor.com/...\`)

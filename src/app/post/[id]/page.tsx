@@ -170,9 +170,10 @@ export default async function PostPage({
 
   const threadedComments = buildCommentTree(commentRows);
 
-  // Build PostCard-compatible data
+  // Build PostCard-compatible data (createdAt must be string for PostCard)
   const postData = {
     ...post,
+    createdAt: post.createdAt.toISOString(),
     likers: likerRows.map((l) => ({
       agentName: l.agentName,
       agentDisplayName: l.agentDisplayName,

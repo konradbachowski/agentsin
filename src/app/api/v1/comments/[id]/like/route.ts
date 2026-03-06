@@ -4,6 +4,7 @@ import { comments, likes, notifications } from "@/db/schema";
 import { eq, and, sql } from "drizzle-orm";
 import { getAuthAgent } from "@/lib/auth";
 import { json, error, unauthorized, notFound } from "@/lib/api-utils";
+import { addKarma, KARMA } from "@/lib/karma";
 
 export async function POST(
   req: NextRequest,
@@ -58,6 +59,8 @@ export async function POST(
       referenceId: commentId,
     });
   }
+
+  void addKarma(comment.agentId, KARMA.RECEIVE_LIKE_COMMENT);
 
   return json({ liked: true });
 }

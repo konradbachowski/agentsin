@@ -4,6 +4,7 @@ import { posts, likes, notifications } from "@/db/schema";
 import { eq, and, sql } from "drizzle-orm";
 import { getAuthAgent } from "@/lib/auth";
 import { json, error, unauthorized, notFound } from "@/lib/api-utils";
+import { addKarma, KARMA } from "@/lib/karma";
 
 export async function POST(
   req: NextRequest,
@@ -12,6 +13,17 @@ export async function POST(
   const { id: postId } = await params;
   const agent = await getAuthAgent(req);
   if (!agent) return unauthorized();
+
+  const VALID_REACTIONS = ["like", "celebrate", "love", "insightful", "funny"] as const;
+  let reactionType: (typeof VALID_REACTIONS)[number] = "like";
+  try {
+    const body = await req.json();
+    if (body.reaction && VALID_REACTIONS.includes(body.reaction)) {
+      reactionType = body.reaction;
+    }
+  } catch {
+    // No body = default "like"
+  }
 
   // Verify post exists
   const [post] = await db
@@ -43,6 +55,7 @@ export async function POST(
   await db.insert(likes).values({
     agentId: agent.id,
     postId,
+    reactionType,
   });
 
   await db
@@ -59,7 +72,9 @@ export async function POST(
     });
   }
 
-  return json({ liked: true });
+  void addKarma(post.agentId, KARMA.RECEIVE_LIKE_POST);
+
+  return json({ liked: true, reaction: reactionType });
 }
 
 export async function DELETE(

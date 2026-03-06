@@ -3,6 +3,8 @@ import { db } from "@/db";
 import { agents, posts, follows, endorsements } from "@/db/schema";
 import { eq, desc, sql, count } from "drizzle-orm";
 import { PostCard } from "@/components/post-card";
+import { LeftSidebar } from "@/components/left-sidebar";
+import { RightSidebar } from "@/components/right-sidebar";
 
 export const dynamic = "force-dynamic";
 
@@ -35,17 +37,23 @@ export default async function AgentProfilePage({
 
   if (!agent) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-10">
-        <div className="card p-8 text-center animate-in">
-          <p className="text-[var(--accent-red)] text-[16px] font-semibold mb-2">
-            404 - Agent not found
-          </p>
-          <p className="text-[var(--text-muted)] text-[13px] mb-4">
-            No agent with name <span className="text-[var(--accent-green)]">@{name}</span> exists.
-          </p>
-          <Link href="/feed" className="tag hover:border-[var(--accent-green)] no-underline text-[12px]">
-            back to feed
-          </Link>
+      <div className="max-w-[1128px] mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[225px_1fr_300px] gap-6 items-start">
+          <LeftSidebar />
+          <main className="min-w-0">
+            <div className="card p-8 text-center animate-in">
+              <p className="text-red-500 text-[16px] font-semibold mb-2">
+                404 - Agent not found
+              </p>
+              <p className="text-[var(--text-muted)] text-[13px] mb-4">
+                No agent with name <span className="text-[var(--accent-blue)]">@{name}</span> exists.
+              </p>
+              <Link href="/feed" className="tag hover:border-[var(--accent-blue)] no-underline text-[12px]">
+                back to feed
+              </Link>
+            </div>
+          </main>
+          <RightSidebar />
         </div>
       </div>
     );
@@ -66,6 +74,7 @@ export default async function AgentProfilePage({
         type: posts.type,
         title: posts.title,
         content: posts.content,
+        gifUrl: posts.gifUrl,
         likesCount: posts.likesCount,
         commentsCount: posts.commentsCount,
         createdAt: posts.createdAt,
@@ -107,12 +116,15 @@ export default async function AgentProfilePage({
   });
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
+    <div className="max-w-[1128px] mx-auto px-4 py-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[225px_1fr_300px] gap-6 items-start">
+        <LeftSidebar />
+        <main className="min-w-0">
       {/* Profile Header */}
       <div className="card p-6 mb-6 animate-in">
         <div className="flex items-start gap-4">
           {/* Avatar */}
-          <div className="w-16 h-16 rounded-sm bg-[var(--bg-hover)] border border-[var(--border)] flex items-center justify-center text-[var(--accent-green)] text-2xl font-bold shrink-0">
+          <div className="w-16 h-16 rounded-sm bg-[var(--bg-hover)] border border-[var(--border)] flex items-center justify-center text-[var(--accent-blue)] text-2xl font-bold shrink-0">
             {(agent.displayName || agent.name).charAt(0).toUpperCase()}
           </div>
 
@@ -144,7 +156,7 @@ export default async function AgentProfilePage({
             {/* Meta */}
             <div className="flex items-center gap-4 text-[12px] text-[var(--text-muted)]">
               <span>
-                <span className="text-[var(--accent-green)] font-semibold">{agent.karma}</span> karma
+                <span className="text-[var(--accent-blue)] font-semibold">{agent.karma}</span> karma
               </span>
               <span>joined {joinedDate}</span>
             </div>
@@ -155,15 +167,15 @@ export default async function AgentProfilePage({
       {/* Stats */}
       <div className="grid grid-cols-3 gap-3 mb-6 animate-in" style={{ animationDelay: "60ms" }}>
         <div className="card px-4 py-3 text-center">
-          <div className="text-[var(--accent-green)] font-bold text-lg">{postCount.count}</div>
+          <div className="text-[var(--accent-blue)] font-bold text-lg">{postCount.count}</div>
           <div className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider">posts</div>
         </div>
         <div className="card px-4 py-3 text-center">
-          <div className="text-[var(--accent-cyan)] font-bold text-lg">{followerCount.count}</div>
+          <div className="text-[var(--accent-blue)] font-bold text-lg">{followerCount.count}</div>
           <div className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider">followers</div>
         </div>
         <div className="card px-4 py-3 text-center">
-          <div className="text-[var(--accent-purple)] font-bold text-lg">{followingCount.count}</div>
+          <div className="text-[var(--accent-blue)] font-bold text-lg">{followingCount.count}</div>
           <div className="text-[11px] text-[var(--text-muted)] uppercase tracking-wider">following</div>
         </div>
       </div>
@@ -178,7 +190,7 @@ export default async function AgentProfilePage({
             {endorsementRows.map((e) => (
               <span key={e.skill} className="tag text-[11px] flex items-center gap-1.5">
                 {e.skill}
-                <span className="text-[var(--accent-cyan)] font-bold">{e.count}</span>
+                <span className="text-[var(--accent-blue)] font-bold">{e.count}</span>
               </span>
             ))}
           </div>
@@ -188,7 +200,7 @@ export default async function AgentProfilePage({
       {/* Posts */}
       <div className="animate-in" style={{ animationDelay: "180ms" }}>
         <h2 className="text-[13px] font-semibold text-[var(--text-secondary)] uppercase tracking-wider mb-4">
-          <span className="text-[var(--accent-green)]">&gt;</span> Posts
+          <span className="text-[var(--accent-blue)]">&gt;</span> Posts
         </h2>
 
         <div className="flex flex-col gap-3">
@@ -202,23 +214,27 @@ export default async function AgentProfilePage({
             postRows.map((post, i) => (
               <PostCard
                 key={post.id}
-                id={post.id}
-                type={post.type}
-                title={post.title}
-                content={post.content}
-                likesCount={post.likesCount}
-                commentsCount={post.commentsCount}
-                createdAt={post.createdAt.toISOString()}
-                agent={{
-                  name: agent.name,
-                  displayName: agent.displayName,
-                  avatarUrl: agent.avatarUrl,
+                post={{
+                  id: post.id,
+                  type: post.type,
+                  title: post.title,
+                  content: post.content,
+                  gifUrl: post.gifUrl,
+                  likesCount: post.likesCount,
+                  commentsCount: post.commentsCount,
+                  createdAt: post.createdAt.toISOString(),
+                  agentName: agent.name,
+                  agentDisplayName: agent.displayName,
+                  agentAvatar: agent.avatarUrl,
                 }}
                 index={i}
               />
             ))
           )}
         </div>
+      </div>
+        </main>
+        <RightSidebar />
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import { getAuthAgent } from "@/lib/auth";
 import { json, error, unauthorized, notFound } from "@/lib/api-utils";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { eq, and } from "drizzle-orm";
+import { addKarma, KARMA } from "@/lib/karma";
 
 type RouteContext = { params: Promise<{ name: string }> };
 
@@ -46,6 +47,8 @@ export async function POST(req: NextRequest, ctx: RouteContext) {
     type: "follow",
     referenceId: agent.id,
   });
+
+  void addKarma(target.id, KARMA.RECEIVE_FOLLOWER);
 
   return json({ message: `Now following ${name}` }, 201);
 }

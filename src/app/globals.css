@@ -1,32 +1,35 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #0a0b0f;
-  --bg-secondary: #12131a;
-  --bg-card: #161821;
-  --bg-hover: #1c1e2a;
-  --border: #2a2d3a;
-  --border-bright: #3a3d4a;
-  --text-primary: #e8eaf0;
-  --text-secondary: #8b8fa3;
-  --text-muted: #5a5e72;
-  --accent-green: #00ff88;
-  --accent-green-dim: #00cc6a;
-  --accent-cyan: #00d4ff;
-  --accent-purple: #b088ff;
-  --accent-orange: #ff8c42;
-  --accent-red: #ff4466;
-  --glow-green: 0 0 20px rgba(0, 255, 136, 0.15);
-  --glow-cyan: 0 0 20px rgba(0, 212, 255, 0.15);
-  --glow-purple: 0 0 20px rgba(176, 136, 255, 0.15);
+  /* LinkedIn-inspired palette - slightly teched up */
+  --bg-body: #f4f2ee;
+  --bg-card: #ffffff;
+  --bg-hover: #f5f5f5;
+  --bg-nav: #ffffff;
+  --border: #e0dfdc;
+  --border-light: #ebebeb;
+  --text-primary: #191919;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  --text-link: #0272a6;
+  --accent-blue: #0272a6;
+  --accent-blue-hover: #015a84;
+  --accent-green: #057642;
+  --accent-green-bg: #dff0d8;
+  --accent-orange: #e7a33e;
+  --accent-red: #cc1016;
+  --reaction-like: #378fe9;
+  --reaction-celebrate: #6dae4f;
+  --reaction-support: #a872e8;
+  --reaction-love: #df704d;
+  --reaction-insightful: #e9b448;
 }
 
 @theme inline {
-  --color-background: var(--bg-primary);
+  --color-background: var(--bg-body);
   --color-foreground: var(--text-primary);
-  --font-mono: 'JetBrains Mono', monospace;
-  --font-sans: 'Space Grotesk', sans-serif;
+  --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
 }
 
 * {
@@ -35,157 +38,44 @@
 }
 
 body {
-  background: var(--bg-primary);
+  background: var(--bg-body);
   color: var(--text-primary);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'Inter', -apple-system, system-ui, sans-serif;
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Scanline overlay */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.02) 2px,
-    rgba(0, 0, 0, 0.02) 4px
-  );
-}
-
-/* Selection */
 ::selection {
-  background: rgba(0, 255, 136, 0.25);
-  color: var(--accent-green);
+  background: rgba(10, 102, 194, 0.15);
+  color: var(--accent-blue);
 }
 
-/* Card base */
+/* Card */
 .card {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 4px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  border-radius: 8px;
+  transition: box-shadow 0.15s;
 }
 
 .card:hover {
-  border-color: var(--border-bright);
-  box-shadow: var(--glow-green);
+  /* subtle - LinkedIn cards don't glow */
 }
 
-/* Terminal prompt cursor blink */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+/* LinkedIn-style shadow on hover for feed cards */
+.card-hover:hover {
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.06);
 }
 
-.cursor-blink::after {
-  content: '_';
-  animation: blink 1s step-end infinite;
-  color: var(--accent-green);
-}
-
-/* Glow text */
-.glow-green {
-  text-shadow: 0 0 10px rgba(0, 255, 136, 0.4), 0 0 40px rgba(0, 255, 136, 0.1);
-}
-
-.glow-cyan {
-  text-shadow: 0 0 10px rgba(0, 212, 255, 0.4), 0 0 40px rgba(0, 212, 255, 0.1);
-}
-
-.glow-purple {
-  text-shadow: 0 0 10px rgba(176, 136, 255, 0.4), 0 0 40px rgba(176, 136, 255, 0.1);
-}
-
-/* Stagger entrance */
+/* Animations */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 136, 0.05); }
-  50% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.15); }
-}
-
-@keyframes slideInActivity {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-    max-height: 0;
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-    max-height: 80px;
-  }
-}
-
-@keyframes countUp {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes gridPulse {
-  0%, 100% { opacity: 0.02; }
-  50% { opacity: 0.05; }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
 .animate-in {
-  animation: fadeInUp 0.4s ease-out forwards;
+  animation: fadeInUp 0.3s ease-out forwards;
   opacity: 0;
-}
-
-.animate-in-left {
-  animation: fadeInLeft 0.4s ease-out forwards;
-  opacity: 0;
-}
-
-.animate-fade {
-  animation: fadeIn 0.6s ease-out forwards;
-  opacity: 0;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 3s ease-in-out infinite;
-}
-
-.animate-float {
-  animation: float 4s ease-in-out infinite;
 }
 
 /* Tag pill */
@@ -193,131 +83,130 @@ body::after {
   display: inline-block;
   padding: 2px 8px;
   font-size: 11px;
-  border-radius: 2px;
+  border-radius: 12px;
   border: 1px solid var(--border);
-  color: var(--accent-green);
-  background: rgba(0, 255, 136, 0.05);
-  font-family: 'JetBrains Mono', monospace;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  font-family: inherit;
+  font-weight: 500;
+}
+
+.tag-active {
+  color: var(--accent-blue);
+  border-color: var(--accent-blue);
+  background: rgba(10, 102, 194, 0.06);
 }
 
 /* Post type badges */
 .badge-achievement {
   color: var(--accent-orange);
-  border-color: rgba(255, 140, 66, 0.3);
-  background: rgba(255, 140, 66, 0.08);
+  border-color: rgba(231, 163, 62, 0.3);
+  background: rgba(231, 163, 62, 0.08);
 }
 
 .badge-article {
-  color: var(--accent-cyan);
-  border-color: rgba(0, 212, 255, 0.3);
-  background: rgba(0, 212, 255, 0.08);
+  color: var(--accent-blue);
+  border-color: rgba(10, 102, 194, 0.3);
+  background: rgba(10, 102, 194, 0.08);
 }
 
 .badge-job {
-  color: var(--accent-purple);
-  border-color: rgba(176, 136, 255, 0.3);
-  background: rgba(176, 136, 255, 0.08);
+  color: var(--accent-green);
+  border-color: rgba(5, 118, 66, 0.3);
+  background: rgba(5, 118, 66, 0.08);
 }
 
-/* Hero grid background */
-.hero-grid {
-  background-image:
-    linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  animation: gridPulse 6s ease-in-out infinite;
+/* LinkedIn blue button */
+.btn-primary {
+  background: var(--accent-blue);
+  color: #fff;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: inherit;
 }
 
-/* Activity dot pulse */
-@keyframes dotPulse {
-  0%, 100% { transform: scale(1); opacity: 0.8; }
-  50% { transform: scale(1.6); opacity: 0.3; }
+.btn-primary:hover {
+  background: var(--accent-blue-hover);
 }
 
-.activity-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-green);
-  animation: dotPulse 2s ease-in-out infinite;
+/* Outline button (Follow) */
+.btn-outline {
+  background: transparent;
+  color: var(--accent-blue);
+  border: 1px solid var(--accent-blue);
+  border-radius: 16px;
+  padding: 4px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
 }
 
-/* Activity line */
-.activity-line {
-  position: relative;
-  padding-left: 20px;
-}
-
-.activity-line::before {
-  content: '';
-  position: absolute;
-  left: 2px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: linear-gradient(to bottom, var(--border), transparent);
-}
-
-/* Stat card big number */
-.stat-number {
-  font-size: 2.5rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-
-/* Leaderboard rank */
-.rank-1 { color: var(--accent-orange); }
-.rank-2 { color: var(--text-secondary); }
-.rank-3 { color: var(--accent-orange); opacity: 0.7; }
-
-/* Noise texture */
-.noise::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-/* Section divider */
-.section-line {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin: 3rem 0;
+.btn-outline:hover {
+  background: rgba(10, 102, 194, 0.06);
+  border-width: 2px;
+  padding: 3px 13px;
 }
 
 /* Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* Links */
+a { color: var(--text-link); text-decoration: none; transition: color 0.15s; }
+a:hover { color: var(--accent-blue-hover); text-decoration: underline; }
+
+/* Reaction emoji row */
+.reaction-icons {
+  display: inline-flex;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
+.reaction-icons span {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: #fff;
+  margin-left: -3px;
+  border: 1.5px solid var(--bg-card);
 }
-::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 3px;
+.reaction-icons span:first-child { margin-left: 0; }
+
+/* Dot separator */
+.dot-sep::before {
+  content: '\00B7';
+  margin: 0 4px;
+  color: var(--text-muted);
 }
 
-/* Link styles */
-a {
-  color: var(--accent-green);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-a:hover {
-  color: var(--accent-cyan);
-}
-
-/* Gradient borders */
-.gradient-border-green {
-  border-image: linear-gradient(135deg, var(--accent-green), var(--accent-cyan)) 1;
+/* Activity dot */
+.activity-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  display: inline-block;
 }
 
-.gradient-border-purple {
-  border-image: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan)) 1;
-}
+/* Legal pages prose */
+.prose-legal h1 { font-size: 24px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+.prose-legal h2 { font-size: 16px; font-weight: 600; color: var(--text-primary); margin-top: 28px; margin-bottom: 10px; }
+.prose-legal p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 12px; }
+.prose-legal .meta { font-size: 13px; color: var(--text-muted); margin-bottom: 24px; }
+.prose-legal ul { font-size: 14px; color: var(--text-secondary); line-height: 1.7; padding-left: 20px; margin-bottom: 12px; list-style: disc; }
+.prose-legal li { margin-bottom: 6px; }
+.prose-legal a { color: var(--accent-blue); text-decoration: none; }
+.prose-legal a:hover { text-decoration: underline; }
+.prose-legal table { width: 100%; font-size: 13px; border-collapse: collapse; margin-bottom: 16px; }
+.prose-legal th, .prose-legal td { text-align: left; padding: 8px 12px; border: 1px solid var(--border); }
+.prose-legal th { background: var(--bg-hover); color: var(--text-primary); font-weight: 600; }
+.prose-legal td { color: var(--text-secondary); }

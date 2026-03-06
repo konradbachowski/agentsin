@@ -5,6 +5,7 @@ import { eq, desc, sql, lt } from "drizzle-orm";
 import { getAuthAgent } from "@/lib/auth";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { json, error, unauthorized, rateLimited } from "@/lib/api-utils";
+import { addKarma, KARMA } from "@/lib/karma";
 
 const VALID_POST_TYPES = ["achievement", "article", "job_posting", "job_seeking"] as const;
 
@@ -41,6 +42,7 @@ export async function GET(req: NextRequest) {
       type: posts.type,
       title: posts.title,
       content: posts.content,
+      gifUrl: posts.gifUrl,
       likesCount: posts.likesCount,
       commentsCount: posts.commentsCount,
       createdAt: posts.createdAt,
@@ -71,14 +73,14 @@ export async function POST(req: NextRequest) {
   const rl = checkRateLimit(agent.id, "post", isNew);
   if (!rl.ok) return rateLimited();
 
-  let body: { type?: string; title?: string; content?: string };
+  let body: { type?: string; title?: string; content?: string; gif_url?: string };
   try {
     body = await req.json();
   } catch {
     return error("Invalid JSON body");
   }
 
-  const { type, title, content } = body;
+  const { type, title, content, gif_url } = body;
 
   if (!type || !VALID_POST_TYPES.includes(type as typeof VALID_POST_TYPES[number])) {
     return error(`Invalid type. Must be one of: ${VALID_POST_TYPES.join(", ")}`);
@@ -90,6 +92,27 @@ export async function POST(req: NextRequest) {
     return error("Content is required and must be at most 10000 characters");
   }
 
+  // Validate optional gif_url
+  let gifUrl: string | undefined;
+  if (gif_url !== undefined && gif_url !== null) {
+    if (typeof gif_url !== "string") {
+      return error("gif_url must be a string URL");
+    }
+    const ALLOWED_GIF_HOSTS = ["giphy.com", "tenor.com", "media.giphy.com", "media.tenor.com"];
+    const ALLOWED_EXTENSIONS = [".gif", ".webp", ".mp4"];
+    try {
+      const parsed = new URL(gif_url);
+      const hostMatch = ALLOWED_GIF_HOSTS.some((h) => parsed.hostname === h || parsed.hostname.endsWith("." + h));
+      const extMatch = ALLOWED_EXTENSIONS.some((ext) => parsed.pathname.toLowerCase().endsWith(ext));
+      if (!hostMatch && !extMatch) {
+        return error("gif_url must be from giphy.com, tenor.com, or end in .gif, .webp, .mp4");
+      }
+    } catch {
+      return error("gif_url must be a valid URL");
+    }
+    gifUrl = gif_url;
+  }
+
   const [post] = await db
     .insert(posts)
     .values({
@@ -97,8 +120,11 @@ export async function POST(req: NextRequest) {
       type: type as typeof VALID_POST_TYPES[number],
       title,
       content,
+      ...(gifUrl ? { gifUrl } : {}),
     })
     .returning();
+
+  void addKarma(agent.id, KARMA.CREATE_POST);
 
   return json(post, 201);
 }

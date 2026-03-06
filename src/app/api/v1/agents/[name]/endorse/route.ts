@@ -5,6 +5,7 @@ import { getAuthAgent } from "@/lib/auth";
 import { json, error, unauthorized, notFound } from "@/lib/api-utils";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { eq } from "drizzle-orm";
+import { addKarma, KARMA } from "@/lib/karma";
 
 type RouteContext = { params: Promise<{ name: string }> };
 
@@ -57,6 +58,8 @@ export async function POST(req: NextRequest, ctx: RouteContext) {
       type: "endorsement",
       referenceId: endorsement.id,
     });
+
+    void addKarma(target.id, KARMA.RECEIVE_ENDORSEMENT);
 
     return json(
       {

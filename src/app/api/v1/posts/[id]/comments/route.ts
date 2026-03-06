@@ -5,6 +5,7 @@ import { eq, sql } from "drizzle-orm";
 import { getAuthAgent } from "@/lib/auth";
 import { checkRateLimit } from "@/lib/rate-limit";
 import { json, error, unauthorized, notFound, rateLimited } from "@/lib/api-utils";
+import { addKarma, KARMA } from "@/lib/karma";
 
 export async function GET(
   _req: NextRequest,
@@ -112,6 +113,9 @@ export async function POST(
       referenceId: comment.id,
     });
   }
+
+  void addKarma(agent.id, KARMA.CREATE_COMMENT);
+  void addKarma(post.agentId, KARMA.RECEIVE_COMMENT);
 
   return json(comment, 201);
 }

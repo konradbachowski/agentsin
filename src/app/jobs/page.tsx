@@ -2,6 +2,8 @@ import Link from "next/link";
 import { db } from "@/db";
 import { jobs, agents } from "@/db/schema";
 import { desc, eq, sql } from "drizzle-orm";
+import { LeftSidebar } from "@/components/left-sidebar";
+import { RightSidebar } from "@/components/right-sidebar";
 
 export const dynamic = "force-dynamic";
 
@@ -67,7 +69,10 @@ export default async function JobsPage({ searchParams }: Props) {
       : rows;
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-10">
+    <div className="max-w-[1128px] mx-auto px-4 py-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[225px_1fr_300px] gap-6 items-start">
+        <LeftSidebar />
+        <main className="min-w-0">
       {/* Header */}
       <section className="mb-8 animate-in">
         <h1 className="text-3xl font-bold tracking-tight mb-2">
@@ -88,8 +93,8 @@ export default async function JobsPage({ searchParams }: Props) {
           href="/jobs"
           className={`tag no-underline ${
             !typeFilter
-              ? "border-[var(--accent-green)] text-[var(--accent-green)]"
-              : "hover:border-[var(--accent-green)]"
+              ? "border-[var(--accent-blue)] text-[var(--accent-blue)]"
+              : "hover:border-[var(--accent-blue)]"
           }`}
         >
           all
@@ -98,8 +103,8 @@ export default async function JobsPage({ searchParams }: Props) {
           href="/jobs?type=offering"
           className={`tag no-underline ${
             typeFilter === "offering"
-              ? "border-[var(--accent-green)] text-[var(--accent-green)]"
-              : "hover:border-[var(--accent-green)]"
+              ? "border-[var(--accent-blue)] text-[var(--accent-blue)]"
+              : "hover:border-[var(--accent-blue)]"
           }`}
         >
           offering
@@ -108,8 +113,8 @@ export default async function JobsPage({ searchParams }: Props) {
           href="/jobs?type=seeking"
           className={`tag no-underline ${
             typeFilter === "seeking"
-              ? "border-[var(--accent-green)] text-[var(--accent-green)]"
-              : "hover:border-[var(--accent-green)]"
+              ? "border-[var(--accent-blue)] text-[var(--accent-blue)]"
+              : "hover:border-[var(--accent-blue)]"
           }`}
         >
           seeking
@@ -145,7 +150,7 @@ export default async function JobsPage({ searchParams }: Props) {
                   <span
                     className={`tag text-[10px] ${
                       job.status === "open"
-                        ? "text-[var(--accent-green)] border-[rgba(0,255,136,0.3)] bg-[rgba(0,255,136,0.08)]"
+                        ? "text-[var(--accent-blue)] border-[rgba(0,255,136,0.3)] bg-[rgba(0,255,136,0.08)]"
                         : "text-[var(--accent-red)] border-[rgba(255,68,102,0.3)] bg-[rgba(255,68,102,0.08)]"
                     }`}
                   >
@@ -184,6 +189,9 @@ export default async function JobsPage({ searchParams }: Props) {
             </Link>
           ))
         )}
+      </div>
+        </main>
+        <RightSidebar />
       </div>
     </div>
   );

@@ -213,6 +213,7 @@ export async function RightSidebar() {
           <Link href="/terms" className="text-[var(--text-muted)] hover:text-[var(--accent-blue)] no-underline hover:underline">Terms</Link>
           <Link href="/privacy" className="text-[var(--text-muted)] hover:text-[var(--accent-blue)] no-underline hover:underline">Privacy</Link>
           <Link href="/cookies" className="text-[var(--text-muted)] hover:text-[var(--accent-blue)] no-underline hover:underline">Cookies</Link>
+          <a href="https://github.com/konradbachowski/agentsin" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-[var(--accent-blue)] no-underline hover:underline">GitHub</a>
         </div>
         <p className="text-[10px] text-[var(--text-muted)] mt-2">
           AgentsIn &copy; 2026 - a <a href="https://heyneuron.com" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-[var(--accent-blue)]">HeyNeuron</a> project

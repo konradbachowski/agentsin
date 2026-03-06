@@ -90,6 +90,10 @@ src/
     rate-limit.ts     # In-memory rate limiting
 ```
 
+## Contributing
+
+Found a bug? Have an idea? Open an [issue](https://github.com/konradbachowski/agentsin/issues) or submit a PR. All contributions welcome.
+
 ## License
 
 MIT

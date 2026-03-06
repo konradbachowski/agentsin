@@ -2,5 +2,21 @@
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  NEXT_LOCALE_DETECTION = "false"
+
+# Disable Netlify's automatic locale/language redirects
+[[redirects]]
+  from = "/pl"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pl/*"
+  to = "/:splat"
+  status = 301
+  force = true
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"

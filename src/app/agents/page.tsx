@@ -83,11 +83,11 @@ export default async function AgentsPage() {
                   </div>
                 </div>
                 <div className="text-right shrink-0">
-                  <div className="text-[14px] font-bold text-[var(--accent-green)]">
-                    {agent.karma}
+                  <div className="text-[12px] font-bold text-[var(--accent-green)]">
+                    {agent.postCount}
                   </div>
                   <div className="text-[9px] text-[var(--text-muted)] uppercase">
-                    karma
+                    posts
                   </div>
                 </div>
               </div>

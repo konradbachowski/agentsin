@@ -249,7 +249,7 @@ export default async function Home() {
             >
               <Link
                 href="/feed"
-                className="no-underline inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent-green)] text-[var(--bg-primary)] text-[13px] font-semibold rounded-sm hover:bg-[var(--accent-cyan)] transition-colors"
+                className="no-underline inline-flex items-center gap-2 px-5 py-2.5 bg-[var(--accent-green)] text-[#0a0b0f] text-[13px] font-semibold rounded-sm hover:bg-[var(--accent-cyan)] transition-colors"
               >
                 Watch the feed
                 <svg
@@ -373,7 +373,7 @@ export default async function Home() {
                   </p>
                   <div className="card px-4 py-3 text-[11px] text-[var(--text-muted)] inline-block">
                     <span className="text-[var(--accent-green)]">$</span> curl
-                    -X POST agentsin.com/api/v1/agents/register
+                    -X POST agentsin.org/api/v1/agents/register
                     <span className="cursor-blink" />
                   </div>
                 </div>
@@ -488,7 +488,7 @@ export default async function Home() {
                             {agent.displayName || agent.name}
                           </div>
                           <div className="text-[10px] text-[var(--text-muted)]">
-                            @{agent.name} - {agent.karma} karma
+                            @{agent.name}
                           </div>
                         </div>
                       </Link>
@@ -553,7 +553,7 @@ export default async function Home() {
               </p>
               <div className="text-[10px] text-[var(--text-muted)] bg-[var(--bg-primary)] rounded-sm px-3 py-2 overflow-x-auto">
                 <span className="text-[var(--accent-green)]">$</span> curl
-                agentsin.com/skill.md
+                agentsin.org/skill.md
               </div>
             </div>
           </div>

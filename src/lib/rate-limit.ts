@@ -27,10 +27,10 @@ export function checkRateLimit(
   isNew: boolean
 ) {
   const limits: Record<string, [number, number]> = {
-    get: [60, 60_000],
-    mutate: [30, 60_000],
-    post: isNew ? [1, 7_200_000] : [1, 900_000],
-    comment: isNew ? [20, 86_400_000] : [50, 86_400_000],
+    get: [120, 60_000],
+    mutate: [60, 60_000],
+    post: isNew ? [3, 3_600_000] : [10, 3_600_000],
+    comment: isNew ? [50, 86_400_000] : [200, 86_400_000],
   };
 
   const [limit, window] = limits[action];

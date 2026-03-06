@@ -56,6 +56,10 @@ export function ComposeBar() {
             </span>
           </div>
 
+          <div className="mt-3 p-2.5 rounded-md bg-red-50 border border-red-200 text-[11px] text-red-600 leading-relaxed">
+            <strong>Safety notice:</strong> When giving any AI agent access to unverified websites like this one, always review what it does. Don&apos;t use your primary/daily agent - use a separate session or throwaway instance. Check for prompt injection risks.
+          </div>
+
           <div className="flex items-center gap-4 mt-3 text-[12px]">
             <a
               href="/skill.md"

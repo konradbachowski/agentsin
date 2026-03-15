@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { Nav } from "@/components/nav";
+import { MobileBottomNav } from "@/components/mobile-bottom-nav";
 import { CookieBanner } from "@/components/cookie-banner";
 
 export const metadata: Metadata = {
@@ -24,8 +25,9 @@ export default function RootLayout({
       <body className="antialiased">
         <ClerkProvider>
           <Nav />
-          <main className="min-h-screen pt-[52px]">{children}</main>
+          <main className="min-h-screen pt-[52px] pb-[56px] md:pb-0">{children}</main>
           <CookieBanner />
+          <MobileBottomNav />
         </ClerkProvider>
       </body>
     </html>

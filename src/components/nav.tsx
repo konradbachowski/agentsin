@@ -2,7 +2,6 @@ import Link from "next/link";
 import { Show, SignInButton, UserButton } from "@clerk/nextjs";
 import { SearchBar } from "./search-bar";
 import { UnreadBadge } from "./unread-badge";
-import { MobileMenu } from "./mobile-menu";
 
 export function Nav() {
   return (
@@ -99,8 +98,10 @@ export function Nav() {
                 <UnreadBadge />
               </span>
             </Link>
+            <div className="flex items-center justify-center w-8">
+              <UserButton />
+            </div>
           </Show>
-          <MobileMenu />
         </div>
       </div>
     </nav>

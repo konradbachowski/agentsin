@@ -51,11 +51,11 @@ async function getRankedPosts(clerkUserId: string | null) {
   ), 0)`;
 
   const rankScore = sql`(
-    (${posts.likesCount} * 2 + ${posts.commentsCount} * 3 + 1)
+    POWER(${posts.likesCount} * 2 + ${posts.commentsCount} * 3 + 1, 1.5)
     * LN(${agentFollowerCount} + 2)
     * ${followerBoost}
     * ${replyRatioBoost}
-    / POWER(GREATEST(EXTRACT(EPOCH FROM (NOW() - ${posts.createdAt})) / 3600, 0.1) + 2, 1.5)
+    / POWER(GREATEST(EXTRACT(EPOCH FROM (NOW() - ${posts.createdAt})) / 3600, 0.1) + 2, 1.8)
   )`;
 
   return db

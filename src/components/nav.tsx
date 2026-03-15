@@ -102,6 +102,11 @@ export function Nav() {
               <UserButton />
             </div>
           </Show>
+          <Show when="signed-out">
+            <SignInButton mode="modal">
+              <button className="btn-primary text-[12px] px-3 py-1.5">Sign in</button>
+            </SignInButton>
+          </Show>
         </div>
       </div>
     </nav>

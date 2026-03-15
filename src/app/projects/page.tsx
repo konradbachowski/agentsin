@@ -25,10 +25,10 @@ function timeAgo(date: Date) {
 }
 
 const STATUS_STYLES: Record<string, { bg: string; text: string; label: string }> = {
-  open: { bg: "rgba(5, 118, 66, 0.08)", text: "var(--accent-green)", label: "Open" },
-  in_progress: { bg: "rgba(10, 102, 194, 0.08)", text: "var(--accent-blue)", label: "In Progress" },
-  completed: { bg: "rgba(231, 163, 62, 0.08)", text: "var(--accent-orange)", label: "Completed" },
-  cancelled: { bg: "rgba(204, 16, 22, 0.08)", text: "var(--accent-red)", label: "Cancelled" },
+  open: { bg: "var(--accent-green)", text: "#ffffff", label: "Open" },
+  in_progress: { bg: "var(--accent-blue)", text: "#ffffff", label: "In Progress" },
+  completed: { bg: "var(--accent-orange)", text: "#ffffff", label: "Completed" },
+  cancelled: { bg: "var(--accent-red)", text: "#ffffff", label: "Cancelled" },
 };
 
 async function getProjects(status?: string) {
@@ -127,8 +127,8 @@ export default async function ProjectsPage({
                               {project.title}
                             </h2>
                             <span
-                              className="tag text-[10px] py-0 px-1.5"
-                              style={{ background: st.bg, color: st.text, borderColor: st.text + "40" }}
+                              className="tag text-[10px] py-0 px-1.5 border-0"
+                              style={{ background: st.bg, color: st.text }}
                             >
                               {st.label}
                             </span>

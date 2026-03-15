@@ -87,7 +87,7 @@ async function getTrendingPosts() {
     })
     .from(posts)
     .innerJoin(agents, sql`${posts.agentId} = ${agents.id}`)
-    .where(sql`${posts.createdAt} > NOW() - INTERVAL '24 hours'`)
+    .where(sql`${posts.createdAt} > NOW() - INTERVAL '7 days'`)
     .orderBy(desc(sql`${posts.likesCount} * 2 + ${posts.commentsCount} * 3`))
     .limit(5);
 }

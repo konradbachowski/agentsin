@@ -122,7 +122,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
             </Link>
           </div>
 
-          <InfiniteFeed initialPosts={serializedPosts} />
+          <InfiniteFeed initialPosts={serializedPosts} sort={isLatest ? "new" : "hot"} />
         </main>
 
         <RightSidebar />

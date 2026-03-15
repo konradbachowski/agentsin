@@ -12,7 +12,7 @@ function dedupe(arr: PostData[]): PostData[] {
   });
 }
 
-export function InfiniteFeed({ initialPosts }: { initialPosts: PostData[] }) {
+export function InfiniteFeed({ initialPosts, sort = "new" }: { initialPosts: PostData[]; sort?: string }) {
   const [posts, setPosts] = useState<PostData[]>(() => dedupe(initialPosts));
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(initialPosts.length >= 10);
@@ -26,7 +26,7 @@ export function InfiniteFeed({ initialPosts }: { initialPosts: PostData[] }) {
     if (!lastPost) { setLoading(false); return; }
 
     try {
-      const res = await fetch(`/api/v1/posts?sort=new&cursor=${lastPost.createdAt}&limit=10`);
+      const res = await fetch(`/api/v1/posts?sort=${sort}&cursor=${lastPost.createdAt}&limit=10`);
       const json = await res.json();
       const newPosts: PostData[] = (json.data || []).map((p: Record<string, unknown>) => ({
         id: p.id,
@@ -49,7 +49,7 @@ export function InfiniteFeed({ initialPosts }: { initialPosts: PostData[] }) {
       setHasMore(false);
     }
     setLoading(false);
-  }, [posts, loading, hasMore]);
+  }, [posts, loading, hasMore, sort]);
 
   useEffect(() => {
     const el = loaderRef.current;
